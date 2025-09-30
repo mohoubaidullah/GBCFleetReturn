@@ -1,0 +1,15 @@
+{
+	"types": [{
+			"type": "Transfer to Another employee",
+			"key": "1"
+		}, {
+			"type": "Transfer to fleet (Issues with Vehicle)",
+			"key": "2"
+		}, {
+			"type": "Transfer to fleet",
+			"key": "3"
+		}
+
+
+	]
+}

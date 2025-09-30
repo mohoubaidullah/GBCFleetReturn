@@ -1,0 +1,380 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" xmlns:html="http://www.w3.org/1999/xhtml" xmlns="sap.m" xmlns:l="sap.ui.layout"
+	xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core" xmlns:u="sap.ui.unified" controllerName="fleetreturn.GBCReturnNew.controller.Return"
+	displayBlock="true">
+	<App id="idAppControl">
+		<pages>
+			<Page title="{i18n>title}">
+				<content>
+					<VBox class="sapUiSmallMargin">
+						<f:SimpleForm id="idReturn" editable="true" layout="ResponsiveGridLayout" title="{i18n>idWiz1}" labelSpanXL="4" labelSpanL="3"
+							labelSpanM="4" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="4" emptySpanM="0" emptySpanS="0" columnsXL="2"
+							columnsL="1" columnsM="1" singleContainerFullSize="false">
+							<f:content>
+								<Label text="{i18n>idempId}" required="true"/>
+								<Input id="idempId" maxLength="6" submit="onSubmit" width="180px" required="true" placeholder="Enter Employee ID..."
+									enabled="{localModel>/readmode}"/>
+								<Label text="{i18n>idEmpName}"/>
+								<Text id="idEmpName" text="{/empName}"/>
+								<Label text="{i18n>idRequest}" visible="{localModel>/displaymode}"/>
+								<Text id="idRequest" text="{/Zrecord}" visible="{localModel>/displaymode}"/>
+								<Label text="{i18n>idRequestDate}" visible="{localModel>/displaymode}"/>
+								<Text id="idRequestDate" text="{/ZrequestDate}" visible="{localModel>/displaymode}"/>
+								<Label text="{i18n>idRequestTime}" visible="{localModel>/displaymode}"/>
+								<Text id="idRequestTime" text="{/ZrequestTime}" visible="{localModel>/displaymode}"/>
+								<Label text="{i18n>idRequestor}" visible="{localModel>/displaymode}"/>
+								<Text id="idRequestor" text="{/Zrequestor}" visible="{localModel>/displaymode}"/>
+								<!--<Label text="{i18n>Transferor" visible="{localModel>/displaymode}"/>-->
+								<!--<Text id="idTransferor" text="{/Ztransferor}" visible="{localModel>/displaymode}"/>-->
+								<!--<Text id="idTransferorName" text="{/Ztransferor_n}" visible="{localModel>/displaymode}"/>-->
+								<Label text="{i18n>idTransferee}" visible="{localModel>/displaymode}"/>
+								<Text id="idTransferee" text="{/Ztransferee}" visible="{localModel>/displaymode}"/>
+								<Text id="idTransfereeName" text="{/Ztransferee_n}" visible="{localModel>/displaymode}"/>
+								<Label text="{i18n>idEmpVehicle}"/>
+								<Text id="idEmpVehicle" text="{/Equnr}"/>
+								<Label text="{i18n>idVehDescr}"/>
+								<Text id="idVehDescr" text="{/EquDescr}"/>
+								<Label text="{i18n>idVehPlate}"/>
+								<Text id="idVehPlate" text="{/Plate}"/>
+								<Label text="{i18n>idTransfer}" required="true"/>
+								<ComboBox id="idTransfer" change="onChange" enabled="{localModel>/readmode}">
+									<items>
+										<core:Item text="{i18n>idKeyTransEmp}" key="1"/>
+										<core:Item text="{i18n>idKeyTransFltIss}" key="2"/>
+										<core:Item text="{i18n>idKeyTransFltWait}" key="3"/>
+									</items>
+								</ComboBox>
+								<Label id="idIssueText" text="{i18n>idTypeIssue}" required="true"/>
+								<ComboBox id="idTypeIssue" change="onChangeIssue" enabled="{localModel>/readmode}">
+									<items>
+										<core:Item text="Accident" key="1"/>
+										<core:Item text="Breakdown" key="2"/>
+										<core:Item text="Periodic Inspection" key="3"/>
+									</items>
+								</ComboBox>
+								<Label id="idtoempidLabel" text="{i18n>idtoempidLabel}" required="true"/>
+								<Input id="idToempId" maxLength="6" submit="onSubmitTransferor" width="180px" required="true" placeholder="Enter Employee ID..."
+									enabled="{localModel>/readmode}"/>
+								<Label id="idtoempnameLabel" text="{i18n>idtoempnameLabel}"/>
+								<Text id="idToEmpName"/>
+								<Label id="idIqamaLabel" text="{i18n>idIqamaLabel}"/>
+								<Text id="idIqamaNumber" text="{/empIqama}"/>
+								<Label id="idAbsMobileLabel" text="{i18n>idAbsMobileLabel}"/>
+								<Text id="idAbsharNumber" text="{/empAbsharNo}"/>
+								<Label id="idDOB" text="{i18n>idDOB}"/>
+								<Text id="idAbsharN1" text="{/empAbsharNo}"/>
+								<Label text="Type of Vehicle" required="true"/>
+								<ComboBox id="idVehicleType">
+									<items>
+										<core:Item text="Delivery Truck" key="1"/>
+										<core:Item text="Service Vehicle" key="2"/>
+									</items>
+								</ComboBox>
+							</f:content>
+						</f:SimpleForm>
+					</VBox>
+					<VBox class="sapUiSmallMargin">
+						<f:SimpleForm id="idReturnChecklist" editable="true" layout="ResponsiveGridLayout" title="{i18n>idWiz2}" labelSpanXL="4" labelSpanM="4"
+							labelSpanS="12" adjustLabelSpan="true" emptySpanXL="2" emptySpanL="2" emptySpanM="2" emptySpanS="2" columnsXL="2" columnsM="2"
+							singleContainerFullSize="false" visible="{localModel>/VehicleDetVisible}" labelMinWidth="200">
+							<f:content>
+								<!--<VBox class="sapUiTinyMarginTopBottom">-->
+								<Label text="{i18n>idJack}" required="true" labelFor="idJack"/>
+								<ComboBox id="idJack" enabled="{localModel>/readmode}" selectedKey="{checklist>/Zjack}">
+									<items>
+										<core:Item text="{i18n>idKeyAvailWrk}" key="YES_WORK"/>
+										<core:Item text="{i18n>idKeyAvailNotWrk}" key="YES_NOWORK"/>
+										<core:Item text="{i18n>idKeyNotAvail}" key="NO"/>
+									</items>
+								</ComboBox>
+								<Label text="{i18n>idJackHandle}" required="true" labelFor="idJackHandle"/>
+								<ComboBox selectedKey="{checklist>/Zjackhandle}" id="idJackHandle" enabled="{localModel>/readmode}">
+									<items>
+										<core:Item text="{i18n>idKeyAvail}" key="AVAIL"/>
+										<core:Item text="{i18n>idKeyNotAvail}" key="NOT_AVAIL"/>
+									</items>
+								</ComboBox>
+								<Label text="{i18n>idSpareTire}" required="true" labelFor="idSpareTire"/>
+								<ComboBox selectedKey="{checklist>/Zsparetype}" id="idSpareTire" enabled="{localModel>/readmode}">
+									<items>
+										<core:Item text="{i18n>idKeyGoodCon}" key="YES_GOOD"/>
+										<core:Item text="{i18n>idKeyBadCon}" key="NOT_GOOD"/>
+										<core:Item text="{i18n>idKeyRim}" key="ONLY_RIM"/>
+										<core:Item text="{i18n>idKeyNotAvail}" key="NOT_AVAIL"/>
+									</items>
+								</ComboBox>
+								<Label text="{i18n>idTriangle}" required="true" labelFor="idTriangle"/>
+								<ComboBox selectedKey="{checklist>/Ztriangle}" id="idTriangle" enabled="{localModel>/readmode}">
+									<items>
+										<core:Item text="{i18n>idKeyAvail}" key="YES_WORK"/>
+										<core:Item text="{i18n>idKeyBrok}" key="YES_BROKE"/>
+										<core:Item text="{i18n>idKeyNotAvail}" key="NOT_AVAIL"/>
+									</items>
+								</ComboBox>
+								<Label text="{i18n>idWheelSpanner}" required="true" labelFor="idWheelSpanner"/>
+								<ComboBox selectedKey="{checklist>/Zwheelspanner}" id="idWheelSpanner" enabled="{localModel>/readmode}">
+									<items>
+										<core:Item text="{i18n>idKeyYes}" key="YES"/>
+										<core:Item text="{i18n>idKeyNo}" key="NO"/>
+									</items>
+								</ComboBox>
+								<Label text="{i18n>idFireExtinguisher}" required="true" labelFor="idFireExtinguisher"/>
+								<ComboBox selectedKey="{checklist>/Zfireextinguisher}" id="idFireExtinguisher" enabled="{localModel>/readmode}">
+									<items>
+										<core:Item text="{i18n>idKeyValid}" key="VALID"/>
+										<core:Item text="{i18n>idKeyExpired}" key="EXPIRED"/>
+										<core:Item text="{i18n>idKeyNotAvail}" key="NOT_AVAIL"/>
+									</items>
+								</ComboBox>
+								<!--<Label text="{i18n>Air Pipe" required="true" labelFor="idAirPipe"/>-->
+								<!--<ComboBox selectedKey="{checklist>/Zairpipe}" id="idAirPipe" enabled="{localModel>/readmode}">-->
+								<!--	<items>-->
+								<!--		<core:Item text="{i18n>idKeyYes}" key="YES"/>-->
+								<!--		<core:Item text="{i18n>idKeyNo}" key="NO"/>-->
+								<!--	</items>-->
+								<!--</ComboBox>-->
+								<!--<Label text="{i18n>Radio" required="true" labelFor="idRadio"/>-->
+								<!--<ComboBox selectedKey="{checklist>/Zradio}" id="idRadio" enabled="{localModel>/readmode}">-->
+								<!--	<items>-->
+								<!--		<core:Item text="{i18n>idKeyYes}" key="YES"/>-->
+								<!--		<core:Item text="{i18n>idKeyNo}" key="NO"/>-->
+								<!--	</items>-->
+								<!--</ComboBox>-->
+								<Label text="{i18n>idFuelCap}" required="true" labelFor="idFuelCap"/>
+								<ComboBox selectedKey="{checklist>/Zfuelcap}" id="idFuelCap" enabled="{localModel>/readmode}">
+									<items>
+										<core:Item text="{i18n>idKeyYes}" key="YES"/>
+										<core:Item text="{i18n>idKeyNo}" key="NO"/>
+									</items>
+								</ComboBox>
+								<Label text="{i18n>idWindScreenScratch}" required="true" labelFor="idWindScreenScratch" wrappingType="Hyphenated"
+									tooltip="{i18n>idWindScreenScratch}"/>
+								<ComboBox selectedKey="{checklist>/Zwindscreenscratch}" id="idWindScreenScratch" enabled="{localModel>/readmode}">
+									<items>
+										<core:Item text="{i18n>idKeyYes}" key="Yes"/>
+										<core:Item text="{i18n>idKeyNo}" key="No"/>
+									</items>
+								</ComboBox>
+								<Label text="{i18n>idFrontTireCon}" required="true" labelFor="idFrontTireCon"/>
+								<ComboBox selectedKey="{checklist>/Ztireconditions}" id="idFrontTireCon" enabled="{localModel>/readmode}">
+									<items>
+										<core:Item text="{i18n>idKeyGood}" key="GOOD"/>
+										<core:Item text="{i18n>idKeyAccept}" key="ACCEPT"/>
+										<core:Item text="{i18n>idKeyBad}" key="BAD"/>
+									</items>
+								</ComboBox>
+								<Label text="{i18n>idBackTireCon}" required="true" labelFor="idBackTireCon" tooltip="{i18n>idBackTireCon}"/>
+								<ComboBox selectedKey="{checklist>/Ztirecondback}" id="idBackTireCon" enabled="{localModel>/readmode}" tooltip="{i18n>idBackTireCon}">
+									<items>
+										<core:Item text="{i18n>idKeyGood}" key="GOOD"/>
+										<core:Item text="{i18n>idKeyAccept}" key="ACCEPT"/>
+										<core:Item text="{i18n>idKeyBad}" key="BAD"/>
+									</items>
+								</ComboBox>
+								<Label text="{i18n>idFirst}" required="true" labelFor="idFirst" tooltip="{i18n>idFirst}"/>
+								<ComboBox selectedKey="{checklist>/ZfirstAid}" id="idFirst" enabled="{localModel>/readmode}" tooltip="{i18n>idFirst}">
+									<items>
+										<core:Item text="{i18n>idKeyAvail}" key="AVAIL"/>
+										<core:Item text="{i18n>idKeyNotAvail}" key="NOT_AVAIL"/>
+									</items>
+								</ComboBox>
+								<Label text="{i18n>idTruckCondition}" required="true" labelFor="idTruckCondition" tooltip="{i18n>idTruckCondition}"/>
+								<ComboBox selectedKey="{checklist>/ZtruckCond}" id="idTruckCondition" enabled="{localModel>/readmode}" tooltip="{i18n>idTruckCondition}">
+									<items>
+										<core:Item text="{i18n>idKeyClean}" key="CLEAN"/>
+										<core:Item text="{i18n>idKeyAccept}" key="ACCEPT"/>
+										<core:Item text="{i18n>idKeyDirty}" key="DIRTY"/>
+									</items>
+								</ComboBox>
+								<Label text="{i18n>idCabinCondition}" required="true" labelFor="idCabinCondition" tooltip="{i18n>idCabinCondition}"/>
+								<ComboBox selectedKey="{checklist>/ZCabinCond}" id="idCabinCondition" enabled="{localModel>/readmode}" tooltip="{i18n>idCabinCondition}">
+									<items>
+										<core:Item text="{i18n>idKeyClean}" key="CLEAN"/>
+										<core:Item text="{i18n>idKeyAccept}" key="ACCEPT"/>
+										<core:Item text="{i18n>idKeyDirty}" key="DIRTY"/>
+									</items>
+								</ComboBox>
+								<Label text="{i18n>idRemark}" tooltip="{i18n>idRemark}"/>
+								<TextArea value="{checklist>/Zremarks}" id="idRemark" growing="true" width="100%" maxLength="250" enabled="{localModel>/readmode}"
+									tooltip="{i18n>idRemark}"/>
+								<core:Title text=""/>
+								<Label text="{i18n>idLightConditions}" required="true" labelFor="idLightConditions" tooltip="{i18n>idLightConditions}"/>
+								<ComboBox selectedKey="{checklist>/Zlightconditions}" id="idLightConditions" enabled="{localModel>/readmode}"
+									tooltip="{i18n>idLightConditions}">
+									<items>
+										<core:Item text="{i18n>idKeyWork}" key="WORK"/>
+										<core:Item text="{i18n>idKeyNoWork}" key="NO_WORK"/>
+									</items>
+								</ComboBox>
+								<Label text="{i18n>idBodyScratch}" required="true" labelFor="idBodyScratch" tooltip="{i18n>idBodyScratch}"/>
+								<ComboBox selectedKey="{checklist>/Zbodyscratch}" id="idBodyScratch" enabled="{localModel>/readmode}" tooltip="{i18n>idBodyScratch}">
+									<items>
+										<core:Item text="{i18n>idKeyYes}" key="YES"/>
+										<core:Item text="{i18n>idKeyNo}" key="NO"/>
+									</items>
+								</ComboBox>
+								<Label text="{i18n>idMirrorRearview}" required="true" labelFor="idMirrorRearview" tooltip="{i18n>idMirrorRearview}"/>
+								<ComboBox selectedKey="{checklist>/Zmirrorrearview}" id="idMirrorRearview" enabled="{localModel>/readmode}"
+									tooltip="{i18n>idMirrorRearview}">
+									<items>
+										<core:Item text="{i18n>idKeyYes}" key="YES"/>
+										<core:Item text="{i18n>idKeyNo}" key="NO"/>
+									</items>
+								</ComboBox>
+								<Label text="{i18n>idIndecation}" required="true" labelFor="idIndecation" tooltip="{i18n>idIndecation}"/>
+								<ComboBox selectedKey="{checklist>/Zindication}" id="idIndecation" enabled="{localModel>/readmode}" tooltip="{i18n>idIndecation}">
+									<items>
+										<core:Item text="{i18n>idKeyWork}" key="WORK"/>
+										<core:Item text="{i18n>idKeyNoWork}" key="NO_WORK"/>
+									</items>
+								</ComboBox>
+								<Label text="{i18n>idTailLight}" required="true" labelFor="idTailLight" tooltip="{i18n>idTailLight}"/>
+								<ComboBox selectedKey="{checklist>/Ztaillight}" id="idTailLight" enabled="{localModel>/readmode}" tooltip="{i18n>idTailLight}">
+									<items>
+										<core:Item text="{i18n>idKeyWork}" key="WORK"/>
+										<core:Item text="{i18n>idKeyNoWork}" key="NO_WORK"/>
+									</items>
+								</ComboBox>
+								<Label text="{i18n>idSideLight}" required="true" labelFor="idSideLight" tooltip="{i18n>idSideLight}"/>
+								<ComboBox selectedKey="{checklist>/Zsidelight}" id="idSideLight" enabled="{localModel>/readmode}" tooltip="{i18n>idSideLight}">
+									<items>
+										<core:Item text="{i18n>idKeyWork}" key="WORK"/>
+										<core:Item text="{i18n>idKeyNoWork}" key="NO_WORK"/>
+									</items>
+								</ComboBox>
+								<Label text="{i18n>idNumberPlate}" required="true" labelFor="idNumberPlate" tooltip="{i18n>idNumberPlate}"/>
+								<ComboBox selectedKey="{checklist>/Znumberplate}" id="idNumberPlate" enabled="{localModel>/readmode}" tooltip="{i18n>idNumberPlate}">
+									<items>
+										<core:Item text="{i18n>idKeyYes}" key="YES"/>
+										<core:Item text="{i18n>idKeyNo}" key="NO"/>
+									</items>
+								</ComboBox>
+								<Label text="{i18n>idProtectionBars}" required="true" labelFor="idProtectionBars" tooltip="{i18n>idProtectionBars}"/>
+								<ComboBox selectedKey="{checklist>/Zprotectionbars}" id="idProtectionBars" enabled="{localModel>/readmode}"
+									tooltip="{i18n>idProtectionBars}">
+									<items>
+										<core:Item text="{i18n>idKeyYes}" key="YES"/>
+										<core:Item text="{i18n>idKeyNo}" key="NO"/>
+									</items>
+								</ComboBox>
+								<Label text="{i18n>idIstimarah}" required="true" labelFor="idIstimarah" tooltip="{i18n>idIstimarah}"/>
+								<ComboBox selectedKey="{checklist>/Zistimarah}" id="idIstimarah" enabled="{localModel>/readmode}" tooltip="{i18n>idIstimarah}">
+									<items>
+										<core:Item text="{i18n>idKeyOrgAvail}" key="ORGINAL"/>
+										<core:Item text="{i18n>idKeyCpyAvail}" key="COPY"/>
+										<core:Item text="{i18n>idKeyNotAvail}" key="NOT_AVAIL"/>
+									</items>
+								</ComboBox>
+								<Label text="{i18n>idFAHS}" required="true" labelFor="idFAHS" tooltip="{i18n>idFAHS}"/>
+								<ComboBox selectedKey="{checklist>/Zfahssticker}" id="idFAHS" enabled="{localModel>/readmode}" tooltip="{i18n>idFAHS}">
+									<items>
+										<core:Item text="{i18n>idKeyGoodCon}" key="GOOD"/>
+										<core:Item text="{i18n>idKeyBadCon}" key="BAD"/>
+										<core:Item text="{i18n>idKeyNotAvail}" key="NOT_AVAIL"/>
+									</items>
+								</ComboBox>
+								<Label text="{i18n>idBoxBranding}" required="true" labelFor="idBoxBranding" tooltip="{i18n>idBoxBranding}"/>
+								<ComboBox selectedKey="{checklist>/ZboxBrand}" id="idBoxBranding" enabled="{localModel>/readmode}" tooltip="{i18n>idBoxBranding}">
+									<items>
+										<core:Item text="{i18n>idKeyGood}" key="GOOD"/>
+										<core:Item text="{i18n>idKeyScratch}" key="SCRATCH"/>
+										<core:Item text="{i18n>idKeyFainted}" key="FAINTED"/>
+										<core:Item text="{i18n>idKeyCornr}" key="CORNER"/>
+										<core:Item text="{i18n>idKeyDamaged}" key="DAMAGED"/>
+									</items>
+								</ComboBox>
+								<Label text="{i18n>idCabinBranding}" required="true" labelFor="idCabinBranding" tooltip="{i18n>idCabinBranding}"/>
+								<ComboBox selectedKey="{checklist>/ZcabinBrand}" id="idCabinBranding" enabled="{localModel>/readmode}" tooltip="{i18n>idCabinBranding}">
+									<items>
+										<core:Item text="{i18n>idKeyGood}" key="GOOD"/>
+										<core:Item text="{i18n>idKeyScratch}" key="SCRATCH"/>
+										<core:Item text="{i18n>idKeyFainted}" key="FAINTED"/>
+										<core:Item text="{i18n>idKeyCornr}" key="CORNER"/>
+										<core:Item text="{i18n>idKeyDamaged}" key="DAMAGED"/>
+									</items>
+								</ComboBox>
+								<Label text="{i18n>idBackBranding}" required="true" labelFor="idBackBranding" tooltip="{i18n>idBackBranding}"/>
+								<ComboBox selectedKey="{checklist>/ZbacksideBrand}" id="idBackBranding" enabled="{localModel>/readmode}" tooltip="{i18n>idBackBranding}">
+									<items>
+										<core:Item text="{i18n>idKeyGood}" key="GOOD"/>
+										<core:Item text="{i18n>idKeyScratch}" key="SCRATCH"/>
+										<core:Item text="{i18n>idKeyFainted}" key="FAINTED"/>
+										<core:Item text="{i18n>idKeyCornr}" key="CORNER"/>
+										<core:Item text="{i18n>idKeyDamaged}" key="DAMAGED"/>
+									</items>
+								</ComboBox>
+								<!--</VBox>-->
+							</f:content>
+						</f:SimpleForm>
+					</VBox>
+					<VBox class="sapUiSmallMargin">
+						<MessageStrip text="{i18n>msg6}" type="Warning" showIcon="true" showCloseButton="true" class="sapUiMediumMarginBottom"/>
+						<f:SimpleForm id="IdVehicleCheckList" editable="true" layout="ResponsiveGridLayout" title="{i18n>idWiz1a}" labelSpanXL="4" labelSpanL="4"
+							labelSpanM="12" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="2"
+							columnsL="1" columnsM="1" backgroundDesign="Solid" singleContainerFullSize="false" visible="{localModel>/VehicleDetVisible}">
+							<f:content>
+								<core:Title text="{i18n>idWiz3}"/>
+								<Label text="{i18n>lblFront}" required="true"/>
+								<u:FileUploader id="idFrontUpload" width="100%" tooltip="Upload Front Image of Vechile" style="Emphasized" placeholder="{i18n>fltPlace}"
+									change="handleValueChange" maximumFileSize="2" fileSizeExceed="handleFile" enabled="{localModel>/readmode}"/>
+								<Button id="idFront" type="Accept" press="openFrontBtn" text="{i18n>BtnFront}"/>
+								<Label text="{i18n>lblLeft}" required="true"/>
+								<u:FileUploader id="idLeftUpload" width="100%" tooltip="Upload Left Image of Vechile" style="Emphasized" placeholder="{i18n>fltPlace}"
+									change="handleValueChange" maximumFileSize="2" fileSizeExceed="handleFile" enabled="{localModel>/readmode}"/>
+								<Button id="idLeft" type="Accept" press="openLeftBtn" text="{i18n>BtnLeft}"/>
+								<Label text="{i18n>lblRight}" required="true"/>
+								<u:FileUploader id="idRightUpload" width="100%" tooltip="Upload Right Image of Vechile" style="Emphasized" placeholder="{i18n>fltPlace}"
+									change="handleValueChange" maximumFileSize="2" fileSizeExceed="handleFile" enabled="{localModel>/readmode}"/>
+								<Button id="idRight" type="Accept" press="openRightBtn" text="{i18n>BtnRight}"/>
+								<Label text="{i18n>lblBack}" required="true"/>
+								<u:FileUploader id="idBackUpload" width="100%" tooltip="Upload Back Image of Vechile" style="Emphasized" placeholder="{i18n>fltPlace}"
+									change="handleValueChange" maximumFileSize="2" fileSizeExceed="handleFile" enabled="{localModel>/readmode}"/>
+								<Button id="idBack" type="Accept" press="openBackBtn" text="{i18n>BtnBack}"/>
+								<!--<Label text="{i18n>Actions"/>-->
+								<!--<Button id="idButtonUpload" text="Upload Files" width="100px" press="onUploadDocument" activeIcon="sap-icon://upload"-->
+								<!--	/>-->
+								<Label text="{i18n>lblVechile}"/>
+								<HBox class="sapUiContentPadding">
+									<Button id="idfileIshtimarah" type="Accept" press="openIshtimarahFile" visible="{localModel>/idfileIshtimarah}" text="{i18n>Btn_Isht}"/>
+									<Button id="idfileInsurance" press="openInsuranceFile" visible="{localModel>/idfileInsurance}" text="{i18n>Btn_Insur}"/>
+									<Button id="idfileMOTCard" press="openMOTCard" visible="{localModel>/idfileMOTCard}" text="{i18n>Btn_MOT}"/>
+									<Button id="idfileMVPIDocument" press="openMVPIDocument" visible="{localModel>/idfileMVPIDocument}" text="{i18n>Btn_MVPI}"/>
+									<Button id="idfileSASOCertificate" press="openSASOCertificateFile" visible="{localModel>/idfileSASOCertificate}" text="{i18n>Btn_SASO}"/>
+								</HBox>
+								<Label text="Front Images"/>
+								<!--<Label text="Vehcile Images"/>-->
+								<HBox >
+									<l:HorizontalLayout id="idFleetImagesFront"></l:HorizontalLayout>
+								</HBox>
+								<Label text="Back Images"/>
+								<HBox >
+									<l:HorizontalLayout id="idFleetImagesBack"></l:HorizontalLayout>
+								</HBox>
+								<Label text="Right Images"/>
+								<HBox >
+									<l:HorizontalLayout id="idFleetImagesRight"></l:HorizontalLayout>
+								</HBox>
+								<Label text="Left Images"/>
+								<HBox >
+									<l:HorizontalLayout id="idFleetImagesLeft"></l:HorizontalLayout>
+								</HBox>
+								<Label/>
+								<HBox>
+									<Button text="{i18n>Btn_Submit}" press="onPress" enabled="{localModel>/readmode}">
+										<layoutData>
+											<FlexItemData growFactor="1"/>
+										</layoutData>
+									</Button>
+									<Button text="{i18n>Btn_Digit}" press="onSign" visible="{localModel>/displaymode}">
+										<layoutData>
+											<FlexItemData growFactor="1"/>
+										</layoutData>
+									</Button>
+								</HBox>
+							</f:content>
+						</f:SimpleForm>
+					</VBox>
+				</content>
+			</Page>
+		</pages>
+	</App>
+</mvc:View>
